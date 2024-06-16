@@ -12,6 +12,9 @@ class Drawinfo:
     SIDE_PADDING = 100
     TOP_PADDING = 150
 
+    FONT = pygame.font.SysFont("comicsans", 20)
+    LARGE_FONT = pygame.font.SysFont("comicsans", 30)
+
     def __init__(self, width, height, list):
         self.width = width
         self.height = height
@@ -51,6 +54,13 @@ def draw_list(info):
 
 def draw(info):
     info.window.fill(info.BACKGROUND)
+
+    Controls = info.FONT.render("R - Reset, Space - Start Sort, A - Ascending, D - Descending", 1, info.BLACK)
+    info.window.blit(Controls, (info.width // 2 - Controls.get_width() // 2, 50))
+
+    SortingControls = info.FONT.render("1 - Insertion Sort, 2 - Bubble Sort", 1, info.BLACK)
+    info.window.blit(SortingControls, (info.width // 2 - SortingControls.get_width() // 2, 100))
+
     draw_list(info)
     pygame.display.update()
 
