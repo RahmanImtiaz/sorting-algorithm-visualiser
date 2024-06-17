@@ -71,7 +71,7 @@ def draw(info, algorithm_name, ascending):
     Controls = info.FONT.render("R - Reset, Space - Start Sort, A - Ascending, D - Descending", 1, info.BLACK)
     info.window.blit(Controls, (info.width // 2 - Controls.get_width() // 2, 70))
 
-    SortingControls = info.FONT.render("1 - Insertion Sort, 2 - Bubble Sort", 1, info.BLACK)
+    SortingControls = info.FONT.render("1 - Insertion Sort, 2 - Bubble Sort, 3 - Selection Sort", 1, info.BLACK)
     info.window.blit(SortingControls, (info.width // 2 - SortingControls.get_width() // 2, 120))
 
     draw_list(info)
@@ -109,7 +109,25 @@ def insertion_sort(info, ascending=True):
         yield True
 
     return list
- 
+
+def selection_sort(info, ascending=True):
+    list = info.list
+    n = len(list)
+
+    for i in range(n):
+        min_idx = i
+
+        for j in range(i + 1, n):
+            if (ascending and list[j] < list[min_idx]) or (not ascending and list[j] > list[min_idx]):
+                min_idx = j
+
+        list[i], list[min_idx] = list[min_idx], list[i]
+        draw_list(info, {i: info.GREEN, min_idx: info.RED}, clear_bg=True)
+        yield True
+
+    return list
+
+
 def main():
 
     clock = pygame.time.Clock()
@@ -165,6 +183,9 @@ def main():
             elif pygame.key.get_pressed()[pygame.K_2] and not sorting:
                 sorting_algorithm = bubble_sort
                 sorting_algorithm_name = "Bubble Sort"
+            elif pygame.key.get_pressed()[pygame.K_3] and not sorting:
+                sorting_algorithm = selection_sort
+                sorting_algorithm_name = "Selection Sort"
     pygame.quit()  
 
 
